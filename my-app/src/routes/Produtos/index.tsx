@@ -1,53 +1,59 @@
 import { useEffect, useState } from "react";
 import type { TipoProduto } from "../../types/types";
 import { Link, useNavigate } from "react-router";
-// import ProdutoCard from "../../components/ProdutoCard";
- 
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function Produtos() {
   //Modificar o título da página;
   document.title = "Produtos";
- 
+
   const navigate = useNavigate();
- 
+
   //Criando o recipiente da lista de dados e tipando com o tipo de produto
   const [produtos, setProdutos] = useState<TipoProduto[]>([]);
- 
+
   useEffect(() => {
     //Simulando a requisição para o backend
- 
+
     const carregaProdutos = async () => {
       try {
-        const resposta = await fetch("http://localhost:3001/produtos");
- 
+        const resposta = await fetch(API_URL);
+
         if (!resposta.ok) {
           throw new Error(
             `Erro na listagem de produtos: ${resposta.status} - ${resposta.statusText}`,
           );
         }
- 
-        const data: TipoProduto[] = await resposta.json();
+
+        const resultado = await resposta.json();
+        const{data,status} = resultado;
+
+        if(status === "error") {
+          throw new Error(`Erro na listagem de produtos: ${status}`);
+        }
         console.log(data);
         setProdutos(data);
       } catch (error) {
         console.error(error);
       }
     };
- 
+
     carregaProdutos();
   }, []);
- 
+
   const handleDelete = async (id: string) => {
     try {
       const response = await fetch(`http://localhost:3001/produtos/${id}`, {
         method: "DELETE",
       });
- 
+
       if (!response.ok) {
         throw new Error(
           `A exclusão falhou: ${response.status} - ${response.statusText}`,
         );
       }
- 
+
       //MSG de SUCESSO
       alert("O produto foi excluído com sucesso!");
       //Redirecionando para a página de produtos
@@ -56,17 +62,17 @@ export default function Produtos() {
       console.error(error);
     }
   };
- 
+
   return (
     <main style={{ padding: "20px" }}>
       <h2>Produtos</h2>
-      {/*  <div className="flex">
+    {/*  <div className="flex">
         {produtos.map((p) => (
           <ProdutoCard produto={p}  />
         ))}
-      </div> */}
- 
-      {/* <div className="flex">
+      </div>
+
+       <div className="flex">
         {produtos.map((p) => (
           <ProdutoCard
             nome={p.nome}
@@ -76,8 +82,8 @@ export default function Produtos() {
           />
         ))}
       </div> */}
- 
-       <table border={1} cellPadding={10} style={{ width: '100%', borderCollapse: 'collapse' }}>
+
+   <table border={1} cellPadding={10} style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                     <tr style={{ backgroundColor: '#2c3e50', color: '#ffffff' }}>
                         <th>ID</th>
@@ -86,7 +92,7 @@ export default function Produtos() {
                         <th>Estoque</th>
                         <th>Avatar</th>
                         <th>Ações</th>
-                    </tr>
+                    </tr> 
                 </thead>
                 <tbody>
                     {produtos.map((p) => (
@@ -107,7 +113,7 @@ export default function Produtos() {
                         <td colSpan={6}>Quantidade de produtos - {produtos.length}</td>
                     </tr>
                 </tfoot>
-            </table>
+            </table> 
     </main>
   );
 }
