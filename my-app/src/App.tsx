@@ -1,34 +1,8 @@
-import { Outlet } from "react-router";
-import Cabecalho from "./components/Cabecalho";
-import Rodape from "./components/Rodape";
-import { useState } from "react";
-import type { Tema } from "./types/types";
 import { Layout } from "./components/Layout";
-
-  
+import type { Tema } from "./types/types";
 
 export default function App() {
+  const tema: Tema = "light";
 
-  const [tema, setTema] = useState<Tema>('light');
-
-  return (
-    <div>
-      <Layout tema={tema}/>
-    </div>
-  )
+  return <Layout tema={tema} />;
 }
-
-
-
-// export default function App() {
-
-//   const [tema, setTema] = useState<Tema>('light');
-
-//   return (
-//     <div>
-//       <Cabecalho />
-//       <Outlet />
-//       <Rodape />
-//     </div>
-//   )
-// }
