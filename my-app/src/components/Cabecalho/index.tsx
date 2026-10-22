@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import Menu from "../Menu/Menu";
-import { TemaContext } from "../../contexts/TemaContext";
 import { FaMoon, FaSun } from "react-icons/fa";
-
+import { TemaContext } from "../../contexts/TemaContext";
+import Menu from "../Menu/Menu";
 
 export default function Cabecalho() {
   const { tema, alternarTema } = useContext(TemaContext);
+  const proximoTema = tema === "light" ? "escuro" : "claro";
 
   return (
     <header>
@@ -13,8 +13,13 @@ export default function Cabecalho() {
 
       <Menu />
 
-      <button type="button" onClick={alternarTema}>
-        {tema === "light " ? <FaMoon/> : <FaSun/>}
+      <button
+        type="button"
+        onClick={alternarTema}
+        aria-label={`Ativar tema ${proximoTema}`}
+        title={`Ativar tema ${proximoTema}`}
+      >
+        {tema === "light" ? <FaMoon aria-hidden="true" /> : <FaSun aria-hidden="true" />}
       </button>
     </header>
   );

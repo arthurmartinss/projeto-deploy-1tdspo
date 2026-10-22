@@ -1,22 +1,63 @@
 @import "tailwindcss";
- 
+
 @layer base {
- 
-    body{
-        @apply bg-gray-900 text-white w-screen;
-    }
- 
-    .container{
-    @apply bg-gray-900 text-white flex flex-col min-w-screen w-screen h-screen justify-between;
-   
-    & header{
-        @apply bg-gray-700 w-full;
-    }
-    & main{
-        @apply bg-gray-500;
-    }
-    & footer{
-        @apply bg-gray-800;
-    }
-    }
+  body {
+    @apply m-0 min-h-screen;
+  }
+
+  .container {
+    @apply flex min-h-screen w-full flex-col justify-between transition-colors;
+  }
+
+  .container header {
+    @apply flex w-full items-center justify-between p-4;
+  }
+
+  .container header nav ul {
+    @apply flex gap-4;
+  }
+
+  .container header button {
+    @apply cursor-pointer rounded p-2 text-xl;
+  }
+
+  .container main {
+    @apply grow p-4;
+  }
+
+  .container footer {
+    @apply p-4;
+  }
+
+  .container.light {
+    @apply bg-gray-100 text-gray-900;
+  }
+
+  .container.light header {
+    @apply bg-gray-200;
+  }
+
+  .container.light main {
+    @apply bg-white;
+  }
+
+  .container.light footer {
+    @apply bg-gray-300;
+  }
+
+  .container.dark {
+    @apply bg-gray-900 text-white;
+  }
+
+  .container.dark header {
+    @apply bg-gray-700;
+  }
+
+  .container.dark main {
+    @apply bg-gray-500;
+  }
+
+  .container.dark footer {
+    @apply bg-gray-800;
+  }
 }
